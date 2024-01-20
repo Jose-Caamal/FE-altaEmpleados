@@ -1,0 +1,65 @@
+<div class="title">
+  <h1>{{accion}} Empleado</h1>
+</div>
+
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="container">
+  <mat-card >
+    <mat-card-subtitle class="card">
+      Datos del Empleado
+    </mat-card-subtitle>
+    <form [formGroup]="form" (ngSubmit)="guardarEmpleado()">
+      <mat-grid-list cols="2" rowWhith="50px" rowHeight="80px">
+        <mat-grid-tile>
+          <mat-form-field class="mat-form-field" appearance="fill">
+            <mat-label>Nombre Completo</mat-label>
+            <input maxlength="60" formControlName="nombreCompleto" matInput autocomplete="off">
+            <mat-hint *ngIf="form.controls['nombreCompleto'].hasError('required') && form.controls['nombreCompleto'].touched" class="error-message">Este campo es requerido</mat-hint>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile appearance="fill">
+            <mat-checkbox class="mat-form-field" formControlName="estatus" [checked]="true">Estatus</mat-checkbox>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field class="mat-form-field" appearance="fill">
+            <mat-label>Edad</mat-label>
+            <input maxlength="2" type="number" formControlName="edad" matInput autocomplete="off">
+            <mat-hint *ngIf="form.controls['edad'].hasError('required') && form.controls['edad'].touched" class="error-message">Este campo es requerido</mat-hint>
+            <mat-hint *ngIf="form.controls['edad'].hasError('max')" class="error-message">Edad Maxima para el Empleado 65</mat-hint>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field class="mat-form-field" appearance="fill" color="accent">
+            <mat-label>Fecha de Nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker1" formControlName="fechaNacimiento" >
+            <mat-hint *ngIf="form.controls['fechaNacimiento'].hasError('required') && form.controls['fechaNacimiento'].touched" class="error-message">Este campo es requerido</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field class="mat-form-field" appearance="fill">
+            <mat-label>Cargo</mat-label>
+            <mat-select formControlName="cargo"  name="food">
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let cargoItem of cargo" [value]="cargoItem">
+                {{ cargoItem.descripcion }}
+              </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="form.controls['cargo'].hasError('required') && form.controls['cargo'].touched" class="error-message">Este campo es requerido</mat-hint>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="2" >
+          <button mat-raised-button routerLink="listEmpleados">Volver</button>
+          <button  type="submit" mat-raised-button class="btnAceptar">Guardar</button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+  </mat-card>
+</div>
